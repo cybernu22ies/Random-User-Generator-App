@@ -1,4 +1,4 @@
-package com.example.randomuser.presentation
+package com.example.randomuser.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -47,10 +47,9 @@ import com.example.randomuser.domain.Location
 import com.example.randomuser.domain.Name
 import com.example.randomuser.domain.Picture
 import com.example.randomuser.domain.User
-import com.example.randomuser.ui.theme.BlueGradient
-import com.example.randomuser.ui.theme.Gray
+import com.example.randomuser.presentation.linearGradient
+import com.example.randomuser.presentation.setColor
 import com.example.randomuser.ui.theme.RandomUserTheme
-import com.example.randomuser.ui.theme.White
 
 @Composable
 fun UserDetailsScreen(
@@ -119,7 +118,7 @@ fun UserDetailsScreen(
                     .padding(start = 16.dp, end = 16.dp)
                     .shadow(16.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surface),
+                    .background(MaterialTheme.colorScheme.surfaceContainer),
                 selectedTabIndex = selectedTabIndex,
                 tabs = userInfoTabs,
                 onSelectedTabChanged = { newIndex ->
@@ -157,7 +156,9 @@ fun ImageCard(
     Box(modifier, contentAlignment = Alignment.TopCenter) {
         Box(
             modifier = Modifier
-                .background(BlueGradient)
+                .background(
+                    MaterialTheme.colorScheme.primary.linearGradient()
+                )
                 .fillMaxWidth()
                 .fillMaxSize(0.4f)
         )
@@ -170,7 +171,7 @@ fun ImageCard(
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(White)
+                    .background(MaterialTheme.colorScheme.surface)
             ) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
@@ -189,10 +190,11 @@ fun ImageCard(
             Text(
                 modifier = Modifier.padding(vertical = 24.dp),
                 text = "Hi how are you today?\nI'm",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall
             )
-            Text("$firstName $lastName", style = MaterialTheme.typography.titleMedium)
+            Text("$firstName $lastName", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
         }
     }
 }
@@ -215,13 +217,13 @@ fun UserInfoTabRow(
     ) {
         PrimaryTabRow(
             modifier = Modifier.background(
-                brush = BlueGradient
+                brush = MaterialTheme.colorScheme.primary.linearGradient()
             ),
             indicator = {
-               TabRowDefaults.SecondaryIndicator(
-                   color = MaterialTheme.colorScheme.surfaceDim,
-                   modifier = Modifier.tabIndicatorOffset(selectedTabIndex)
-               )
+                TabRowDefaults.SecondaryIndicator(
+                    color = MaterialTheme.colorScheme.surfaceDim,
+                    modifier = Modifier.tabIndicatorOffset(selectedTabIndex)
+                )
             },
             divider = {},
             containerColor = Color.Transparent,
@@ -231,13 +233,13 @@ fun UserInfoTabRow(
                     Tab(
                         modifier = Modifier
                             .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-                            .background(if (selectedTabIndex == it.index) MaterialTheme.colorScheme.surface else Color.Transparent),
+                            .background(if (selectedTabIndex == it.index) MaterialTheme.colorScheme.surfaceContainer else Color.Transparent),
                         selected = selectedTabIndex == it.index,
                         onClick = { onSelectedTabChanged(it.index) },
                         icon = {
                             Icon(
                                 painter = painterResource(id = it.iconId),
-                                tint = if (selectedTabIndex == it.index) Gray else MaterialTheme.colorScheme.surface,
+                                tint = if (selectedTabIndex == it.index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary,
                                 contentDescription = null
                             )
                         }
@@ -254,7 +256,7 @@ fun UserInfoTabRow(
         ) {
             tabs[selectedTabIndex].content.forEach { (label, text) ->
                 Text(buildAnnotatedString {
-                    withStyle(MaterialTheme.typography.titleMedium.toSpanStyle()) {
+                    withStyle(MaterialTheme.typography.titleMedium.setColor(MaterialTheme.colorScheme.primary).toSpanStyle()) {
                         append("$label  ")
                     }
                     withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {

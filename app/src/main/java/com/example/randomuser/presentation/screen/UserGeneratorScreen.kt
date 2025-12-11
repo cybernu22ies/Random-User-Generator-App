@@ -1,4 +1,4 @@
-package com.example.randomuser.presentation
+package com.example.randomuser.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.style.TextAlign
@@ -155,13 +154,14 @@ fun UserGeneratorScreen(
                     is ApiResponse.Error -> {
                         isButtonClicked = false
                         Text(
-                            text = "TRY AGAIN"
+                            text = "TRY AGAIN",
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
 
                     else -> {
                         Text(
-                            text = "GENERATE"
+                            text = "GENERATE",
                         )
                     }
                 }
@@ -184,6 +184,7 @@ fun MMenuBox(
     Text(
         modifier = Modifier.padding(vertical = 16.dp),
         text = labelText,
+        color = MaterialTheme.colorScheme.primary,
         style = MaterialTheme.typography.titleMedium
     )
     ExposedDropdownMenuBox(
@@ -224,7 +225,7 @@ fun MMenuBox(
 @Composable
 private fun UserGeneratorScreenPreview() {
     RandomUserTheme {
-        Surface(Modifier.background(Color.White)) {
+        Surface(Modifier.background(MaterialTheme.colorScheme.surface)) {
             UserGeneratorScreen(
                 modifier = Modifier.fillMaxSize(),
                 userApiResponse = ApiResponse.Success(

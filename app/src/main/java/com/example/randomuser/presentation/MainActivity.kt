@@ -26,6 +26,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.randomuser.R
 import com.example.randomuser.domain.ApiResponse
+import com.example.randomuser.presentation.screen.AllUsersScreen
+import com.example.randomuser.presentation.screen.UserDetailsScreen
+import com.example.randomuser.presentation.screen.UserGeneratorScreen
 import com.example.randomuser.ui.theme.RandomUserTheme
 import dagger.hilt.android.AndroidEntryPoint
 

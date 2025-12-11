@@ -1,4 +1,4 @@
-package com.example.randomuser.presentation
+package com.example.randomuser.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -117,7 +116,7 @@ fun UserCard(modifier: Modifier = Modifier, user: User, onClick: (user: User) ->
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(user.name.first + " " + user.name.last, style = MaterialTheme.typography.titleMedium)
+            Text(user.name.first + " " + user.name.last, color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
             Text(user.phone, style = MaterialTheme.typography.bodySmall)
             Text(user.nat, style = MaterialTheme.typography.bodySmall)
         }
@@ -155,7 +154,7 @@ private fun AllUsersScreenPreview() {
         )
     }
     RandomUserTheme {
-        Surface(Modifier.background(Color.White)) {
+        Surface(Modifier.background(MaterialTheme.colorScheme.surface)) {
             AllUsersScreen(
                 users = users,
                 onAddUserButtonClicked = {},
