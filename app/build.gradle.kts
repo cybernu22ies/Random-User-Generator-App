@@ -78,8 +78,11 @@ dependencies {
 
     //Hilt for DI
     implementation(libs.hilt.android)
-    //noinspection NewerVersionAvailable
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.kotlinx.serialization.json)
+
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.kotlin)
 }
