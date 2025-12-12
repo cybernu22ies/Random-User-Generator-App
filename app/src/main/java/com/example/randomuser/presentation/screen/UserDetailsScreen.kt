@@ -42,9 +42,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.randomuser.R
-import com.example.randomuser.domain.Dob
 import com.example.randomuser.domain.Location
-import com.example.randomuser.domain.Name
 import com.example.randomuser.domain.Picture
 import com.example.randomuser.domain.User
 import com.example.randomuser.presentation.linearGradient
@@ -66,11 +64,11 @@ fun UserDetailsScreen(
                 index = 0,
                 iconId = R.drawable.ic_person,
                 content = mapOf(
-                    Pair("First name:", user.name.first),
-                    Pair("Last name:", user.name.last),
+                    Pair("First name:", user.firstName),
+                    Pair("Last name:", user.lastName),
                     Pair("Gender:", user.gender),
-                    Pair("Age:", user.dob.age.toString()),
-                    Pair("Date of birth:", user.dob.date)
+                    Pair("Age:", user.age.toString()),
+                    Pair("Date of birth:", user.dateOfBirth)
                 )
             ),
             UserInfoTab(
@@ -109,8 +107,8 @@ fun UserDetailsScreen(
                     .fillMaxHeight(0.5f)
                     .fillMaxWidth(),
                 imageUrl = user.picture.large,
-                firstName = user.name.first,
-                lastName = user.name.last
+                firstName = user.firstName,
+                lastName = user.lastName
             )
             UserInfoTabRow(
                 modifier = Modifier
@@ -194,7 +192,11 @@ fun ImageCard(
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall
             )
-            Text("$firstName $lastName", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
+            Text(
+                "$firstName $lastName",
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }
@@ -256,7 +258,10 @@ fun UserInfoTabRow(
         ) {
             tabs[selectedTabIndex].content.forEach { (label, text) ->
                 Text(buildAnnotatedString {
-                    withStyle(MaterialTheme.typography.titleMedium.setColor(MaterialTheme.colorScheme.primary).toSpanStyle()) {
+                    withStyle(
+                        MaterialTheme.typography.titleMedium.setColor(MaterialTheme.colorScheme.primary)
+                            .toSpanStyle()
+                    ) {
                         append("$label  ")
                     }
                     withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {
@@ -278,11 +283,8 @@ private fun UserDetailScreenPreivew() {
                 User(
                     id = 0,
                     gender = "male",
-                    name = Name(
-                        title = "Mr",
-                        first = "",
-                        last = ""
-                    ),
+                    firstName = "",
+                    lastName = "",
                     location = Location(
                         streetNumber = 10,
                         streetName = "",
@@ -296,7 +298,8 @@ private fun UserDetailScreenPreivew() {
                         timezoneDescription = "",
                     ),
                     email = "",
-                    dob = Dob("", 10),
+                    dateOfBirth = "",
+                    age = 10,
                     phone = "432424",
                     picture = Picture("", "", ""),
                     nat = "",

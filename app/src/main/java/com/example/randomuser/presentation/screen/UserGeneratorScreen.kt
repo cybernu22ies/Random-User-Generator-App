@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
@@ -36,9 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.randomuser.R
 import com.example.randomuser.domain.ApiResponse
-import com.example.randomuser.domain.Dob
 import com.example.randomuser.domain.Location
-import com.example.randomuser.domain.Name
 import com.example.randomuser.domain.Picture
 import com.example.randomuser.domain.User
 import com.example.randomuser.ui.theme.RandomUserTheme
@@ -117,7 +116,7 @@ fun UserGeneratorScreen(
                     menuItems = genders,
                     onExpandedChange = { genderMenuExpanded = it },
                     onDismissRequest = { genderMenuExpanded = false },
-                    onItemClick = { selectedGender = it}
+                    onItemClick = { selectedGender = it }
                 )
 
                 MMenuBox(
@@ -128,7 +127,8 @@ fun UserGeneratorScreen(
                     onExpandedChange = { nationalityMenuExpanded = it },
                     onDismissRequest = { nationalityMenuExpanded = false },
                     onItemClick = { selectedNationality ->
-                        selectedNationalityKey = nationalities.filterValues { it == selectedNationality }.keys.first()
+                        selectedNationalityKey =
+                            nationalities.filterValues { it == selectedNationality }.keys.first()
                     }
                 )
             }
@@ -200,7 +200,7 @@ fun MMenuBox(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             modifier = Modifier
-                .menuAnchor()
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
                 .fillMaxWidth()
         )
 
@@ -232,11 +232,8 @@ private fun UserGeneratorScreenPreview() {
                     User(
                         id = 0,
                         gender = "male",
-                        name = Name(
-                            title = "Mr",
-                            first = "",
-                            last = ""
-                        ),
+                        firstName = "",
+                        lastName = "",
                         location = Location(
                             streetNumber = 10,
                             streetName = "",
@@ -250,7 +247,7 @@ private fun UserGeneratorScreenPreview() {
                             timezoneDescription = "",
                         ),
                         email = "",
-                        dob = Dob("", 10),
+                        "", 10,
                         phone = "432424",
                         picture = Picture("", "", ""),
                         nat = "",

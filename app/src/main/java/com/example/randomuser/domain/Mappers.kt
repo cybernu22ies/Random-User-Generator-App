@@ -1,9 +1,9 @@
 package com.example.randomuser.domain
 
+import com.example.randomuser.data.local.LocationEntity
+import com.example.randomuser.data.local.PictureEntity
 import com.example.randomuser.data.local.UserEntity
-import com.example.randomuser.data.network.DobDto
 import com.example.randomuser.data.network.LocationDto
-import com.example.randomuser.data.network.NameDto
 import com.example.randomuser.data.network.PictureDto
 import com.example.randomuser.data.network.UserDto
 
@@ -11,18 +11,16 @@ fun UserDto.toUser(): User {
     return User(
         id = 0,
         gender = gender,
-        name = name.toName(),
+        firstName = name.first,
+        lastName = name.last,
         location = location.toLocation(),
         email = email,
-        dob = dob.toDob(),
+        dateOfBirth = dob.date,
+        age = dob.age,
         phone = phone,
         picture = picture.toPicture(),
         nat = nat
     )
-}
-
-fun NameDto.toName(): Name {
-    return Name(title = title, first = first, last = last)
 }
 
 fun LocationDto.toLocation(): Location {
@@ -40,10 +38,6 @@ fun LocationDto.toLocation(): Location {
     )
 }
 
-fun DobDto.toDob(): Dob {
-    return Dob(date = date, age = age)
-}
-
 fun PictureDto.toPicture(): Picture {
     return Picture(large = large, medium = medium, thumbnail = thumbnail)
 }
@@ -52,26 +46,69 @@ fun UserEntity.toUser(): User {
     return User(
         id = id,
         gender = gender,
-        name = name,
-        location = location,
+        firstName = firstName,
+        lastName = lastName,
+        location = location.toLocation(),
         email = email,
-        dob = dob,
+        dateOfBirth = dateOfBirth,
+        age = age,
         phone = phone,
-        picture = picture,
+        picture = picture.toPicture(),
         nat = nat
     )
 }
+
+fun LocationEntity.toLocation(): Location {
+    return Location(
+        streetName = streetName,
+        streetNumber = streetNumber,
+        city = city,
+        state = state,
+        country = country,
+        postcode = postcode,
+        latitude = latitude,
+        longitude = longitude,
+        timezoneOffset = timezoneOffset,
+        timezoneDescription = timezoneDescription
+    )
+}
+
+fun PictureEntity.toPicture(): Picture {
+    return Picture(large = large, medium = medium, thumbnail = thumbnail)
+}
+
 
 fun User.toUserEntity(): UserEntity {
     return UserEntity(
         id = id,
         gender = gender,
-        name = name,
-        location = location,
+        firstName = firstName,
+        lastName = lastName,
+        location = location.toLocationEntity(),
         email = email,
-        dob = dob,
+        dateOfBirth = dateOfBirth,
+        age = age,
         phone = phone,
-        picture = picture,
+        picture = picture.toPictureEntity(),
         nat = nat
     )
+}
+
+fun Location.toLocationEntity(): LocationEntity {
+    return LocationEntity(
+        streetName = streetName,
+        streetNumber = streetNumber,
+        city = city,
+        state = state,
+        country = country,
+        postcode = postcode,
+        latitude = latitude,
+        longitude = longitude,
+        timezoneOffset = timezoneOffset,
+        timezoneDescription = timezoneDescription
+    )
+}
+
+fun Picture.toPictureEntity(): PictureEntity {
+    return PictureEntity(large = large, medium = medium, thumbnail = thumbnail)
 }

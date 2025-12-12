@@ -33,9 +33,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.example.randomuser.R
-import com.example.randomuser.domain.Dob
 import com.example.randomuser.domain.Location
-import com.example.randomuser.domain.Name
 import com.example.randomuser.domain.Picture
 import com.example.randomuser.domain.User
 import com.example.randomuser.ui.theme.RandomUserTheme
@@ -63,7 +61,7 @@ fun AllUsersScreen(
         }
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize(),
+            Modifier.fillMaxSize().padding(padding),
             state = usersListState,
         ) {
             items(users.size) { index ->
@@ -77,7 +75,6 @@ fun AllUsersScreen(
                 )
             }
         }
-        padding
     }
 }
 
@@ -86,7 +83,7 @@ fun UserCard(modifier: Modifier = Modifier, user: User, onClick: (user: User) ->
     Row(
         modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
             .clickable(
                 onClick = { onClick(user) }
             ),
@@ -106,7 +103,7 @@ fun UserCard(modifier: Modifier = Modifier, user: User, onClick: (user: User) ->
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(user.picture.medium)
                     .build(),
-                contentDescription = "${user.name.first}'s photo",
+                contentDescription = "${user.firstName}'s photo",
             )
         }
 
@@ -116,7 +113,7 @@ fun UserCard(modifier: Modifier = Modifier, user: User, onClick: (user: User) ->
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(user.name.first + " " + user.name.last, color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
+            Text(user.firstName + " " + user.lastName, color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
             Text(user.phone, style = MaterialTheme.typography.bodySmall)
             Text(user.nat, style = MaterialTheme.typography.bodySmall)
         }
@@ -125,12 +122,12 @@ fun UserCard(modifier: Modifier = Modifier, user: User, onClick: (user: User) ->
 
 @Preview
 @Composable
-private fun AllUsersScreenPreview() {
-    val users = List(4) { 
+private fun AllUsersScreenPreview() {    val users = List(4) {
         User(
             id = 1,
             gender = "male",
-            name = Name(title = "Mr", first = "John", last = "Doe"),
+            firstName = "John",
+            lastName = "Doe",
             location = Location(
                 streetNumber = 123,
                 streetName = "Main St",
@@ -143,7 +140,8 @@ private fun AllUsersScreenPreview() {
                 timezoneOffset = "-5:00",
                 timezoneDescription = "Eastern Time"),
             email = "john.doe@example.com",
-            dob = Dob(date = "1990-01-01", age = 34),
+            dateOfBirth = "1990-01-01",
+            age = 34,
             phone = "123-456-7890",
             picture = Picture(
                 large = "https://randomuser.me/api/portraits/men/75.jpg",
